@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webcam Pose Detection</title>
+    <style>
+        #webcam-container {
+            position: relative;
+            width: 640px;
+            height: 480px;
+        }
+        #webcam {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        #output {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+    <video id="webcam" width="640" height="480" autoplay></video>
+    <canvas id="output" width="640" height="480"></canvas>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet"></script>
+   
+    <script type="text/javascript">
+        // Função para iniciar a detecção de pose
+        async function startPoseDetection() {
+            const video = document.getElementById('webcam');
+            const canvas = document.getElementById('output');
+            const ctx = canvas.getContext('2d');
+
+            // Capturar vídeo da webcam
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    video.srcObject = stream;
+                    video.onloadedmetadata = () => {
+                        video.play();
+                        // Definir tamanho do canvas
+                        canvas.width = video.videoWidth;
+                        canvas.height = video.videoHeight;
+                        // Iniciar detecção de pose
+                        detectPose(video, canvas, ctx);
+                    };
+                })
+                .catch(err => {
+                    console.error('Erro ao acessar a webcam:', err);
+                });
+        }
+
+        // Função para detectar pose
+        async function detectPose(video, canvas, ctx) {
+            // Carregar o modelo PoseNet
+            const net = await posenet.load();
+
+            // Função de loop para detectar pose em cada frame do vídeo
+            async function poseDetectionFrame() {
+                const pose = await net.estimateSinglePose(video, {
+                    flipHorizontal: false
+                });
+
+                // Limpar o canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Desenhar pose na tela
+                drawPose(pose, ctx);
+
+                requestAnimationFrame(poseDetectionFrame);
+            }
+
+            // Função para desenhar a pose no canvas
+            function drawPose(pose, ctx) {
+                const keypoints = pose.keypoints;
+
+                // Desenhar pontos da pose
+                for (let i = 0; i < keypoints.length; i++) {
+                    const { x, y } = keypoints[i].position;
+                    ctx.beginPath();
+                    ctx.arc(x, y, 5, 0, 2 * Math.PI);
+                    ctx.fillStyle = 'red';
+                    ctx.fill();
+                }
+
+                // Conectar os pontos da pose
+                const adjacentKeyPoints = [
+                    [5, 6], [5, 7], [7, 9], [6, 8], // Braços
+                    [11, 12], [11, 13], [13, 15], [12, 14], // Pernas
+                    [5, 11], [6, 12] // Tronco
+                ];
+
+                for (let i = 0; i < adjacentKeyPoints.length; i++) {
+                    const [pointAIndex, pointBIndex] = adjacentKeyPoints[i];
+                    const pointA = keypoints[pointAIndex].position;
+                    const pointB = keypoints[pointBIndex].position;
+                    drawSegment(pointA, pointB, ctx);
+                }
+            }
+
+            // Função para desenhar segmentos entre pontos da pose
+            function drawSegment(pointA, pointB, ctx) {
+                ctx.beginPath();
+                ctx.moveTo(pointA.x, pointA.y);
+                ctx.lineTo(pointB.x, pointB.y);
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = 'red';
+                ctx.stroke();
+            }
+
+            // Iniciar detecção de pose
+            poseDetectionFrame();
+        }
+
+        // Iniciar a detecção de pose quando o documento estiver pronto
+        document.addEventListener('DOMContentLoaded', startPoseDetection);
+    </script>
+</body>
+</html>

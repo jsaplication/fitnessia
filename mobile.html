@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/mobile.css">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+        /* CSS personalizado */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        #canvas-video {
+            width: 100%;
+            height: 100%; /* Mantenha o tamanho definido no CSS personalizado */
+        }
+       
+    </style>
+</head>
+<body>
+    <div class="topo">
+        <div class="logo"></div>
+        <span>Fitness AI</span>
+    </div>
+    <div class="wap">
+        <div class="photo" onclick="atualizar()">
+            <canvas id="canvas-video"></canvas>
+        </div>
+        <div class="card-input">
+        <div class="box-input">
+            <span>Peso Kg</span>
+            <input type="text" name="" id="pesokg">
+        </div>
+
+        <div class="box-input">
+            <span>Altura Mt</span>
+            <input type="text" name="" id="alturamt">
+        </div>
+
+        <div class="box-input">
+            <span>Meta</span>
+            <select id="meta">
+                <option >Ganhar Peso</option>
+                <option >Perder Peso</option>
+                <option >Ganhar Peso e Definir</option>
+                <option >Perder Peso e Definir</option>
+                <option >Aumentar Força e Resistência</option>
+                <option >Tonificar o Corpo</option>
+                <option >Ganhar Massa Magra</option>
+                <option >Melhorar Flexibilidade e Equilíbrio</option>
+                <option >Melhorar Saúde Cardiovascular</option>
+                <option >Aumentar Mobilidade</option>
+                <option >Melhorar Postura</option>
+                <option >Reduzir Estresse</option>
+                <option >Aumentar Energia</option>
+                <option >Melhorar Qualidade do Sono</option>
+            </select>
+           
+        </div>
+
+    </div>
+        <div class="camera-config" id="switch-camera-btn"></div>
+        <div class="camera-time" id="switch-time-btn"></div>
+        <div class="upload" id="capture-btn" onclick="capturePhoto(this)"></div>
+    </div>
+    <div class="preview"></div>
+    <div class="footer"></div>
+    <div class="log">
+        <div class="title-log">Ops! Algo deu errado.</div>
+        <div class="legenda-log">Parece que algo deu errado com sua solicitação. Tente novamente ou envie uma nova foto.</div>
+        <div class="card-button">
+            <div class="btns" onclick="closemodal(this)">Cancelar</div>
+            <div class="btns" onclick="tentarnovamente(this)">Tentar novamente</div>
+        </div>
+    </div>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="js/encrypt.js"></script>
+<script src="js/pose.js"></script>
+<script src="js/ia.js"></script>
+
+<script>
+let currentCamera = ''; // Padrão para câmera traseira
+var camera = window.localStorage.getItem('camera');
+
+
+
+if(camera == null || camera == undefined || camera == ''){
+    console.log('sem camera: camera traseira')
+    currentCamera = 'environment';
+
+}else{
+    console.log('camera ' + camera + ' selecionada')
+    currentCamera = camera;
+}
+
+function setupCamera(cameraId) {
+    // Primeiro, desligamos a câmera atual (se houver)
+    var canvas = document.getElementById('canvas-video');
+    var context = canvas.getContext('2d');
+
+    if (canvas.srcObject) {
+        canvas.srcObject.getTracks().forEach(track => track.stop());
+    }
+
+    // Determine a resolução máxima suportada pela câmera
+    var constraints = {
+        video: {
+            facingMode: cameraId,
+            // width: { ideal: 2160 }, // Largura máxima suportada pela maioria das câmeras
+            // height: { ideal: 4096 } // Altura máxima suportada pela maioria das câmeras
+        }
+    };
+
+    // Em seguida, solicitamos o acesso à nova câmera
+    navigator.mediaDevices.getUserMedia(constraints)
+        .then(function(stream) {
+            const track = stream.getVideoTracks()[0];
+            const capabilities = track.getCapabilities();
+            const settings = track.getSettings();
+            const maxWidth = Math.min(capabilities.width.max, settings.width);
+            const maxHeight = Math.min(capabilities.height.max, settings.height);
+            canvas.width = maxWidth;
+            canvas.height = maxHeight;
+            canvas.srcObject = stream;
+            const imageCapture = new ImageCapture(track);
+            function drawFrame() {
+                imageCapture.grabFrame().then(function(imageBitmap) {
+                    const aspectRatio = imageBitmap.width / imageBitmap.height;
+                    const canvasWidth = canvas.width;
+                    const canvasHeight = canvas.width / aspectRatio;
+                    // console.log(canvasWidth, canvasHeight)
+                    // Centralizar a imagem
+                    const offsetX = (canvasWidth - canvas.width) / 2;
+                    const offsetY = (canvasHeight - canvas.height) / 2;
+
+                    context.drawImage(imageBitmap, -offsetX, -offsetY, canvasWidth, canvasHeight);
+                    requestAnimationFrame(drawFrame);
+
+                    // detectPose(canvas, canvas, context);
+
+                }).catch(function(error) {
+                    console.error('Error:', error);
+                });
+            }
+            drawFrame();
+
+        })
+        .catch(function(err) {
+            console.log("Erro ao acessar a câmera: " + err);
+        });
+}
+
+function capturePhoto(e){
+    $(e).attr('onclick', '');
+
+    var canvas = document.getElementById('canvas-video');
+    var base64Data = canvas.toDataURL('image/jpeg');
+    console.log(base64Data); // Aqui você pode enviar a base64 para onde precisar
+    window.localStorage.setItem('photo', base64Data)
+    // $(".preview").show();
+    $(".preview").attr('style', "background-image: url("+base64Data+"); display:block;")
+
+    var pesokg = $("#pesokg").val();
+    var alturamt = $("#alturamt").val();
+    var meta = $("#meta option:selected").val();
+
+
+    imagerec(base64Data, pesokg, alturamt, meta);
+
+
+
+}
+
+// Switch camera when the switch camera button is clicked
+document.getElementById('switch-camera-btn').addEventListener('click', function() {
+    if(currentCamera == 'environment'){
+        window.localStorage.setItem('camera', 'user')
+        currentCamera = 'user';
+    }else if(currentCamera == 'user'){
+        window.localStorage.setItem('camera', 'environment')
+        currentCamera = 'environment';
+    }else{
+
+    }
+    setupCamera(currentCamera);
+});
+
+setupCamera(currentCamera);
+
+function atualizar(){
+    setupCamera(currentCamera);
+}
+
+
+function contagemRegressiva() {
+  let contador = 5;
+
+  // Função para exibir o contador atual e diminuir o contador
+  function exibirContador() {
+    console.log(contador);
+
+    // Verifica se o contador chegou a 0, se sim, para a contagem regressiva
+    if (contador === 0) {
+      clearInterval(intervalID);
+      console.log("Contagem regressiva concluída!");
+    }
+    contador--;
+  }
+
+  // Chama a função exibirContador a cada segundo
+  const intervalID = setInterval(exibirContador, 1000);
+}
+
+// Chama a função contagemRegressiva para iniciar a contagem regressiva
+contagemRegressiva();
+
+function closemodal(){
+    console.log('close click')
+    $(".log").hide();
+    $("#capture-btn").removeClass('uploadload');
+    $("#capture-btn").addClass('upload');
+    $("#capture-btn").attr('onclick', 'capturePhoto(this)')
+    $(".preview").attr('style', "display:none;")
+}
+
+function tentarnovamente(){
+    $(".log").hide()
+    var pesokg = $("#pesokg").val();
+    var alturamt = $("#alturamt").val();
+    var meta = $("#meta option:selected").val();
+    $(".log").hide()
+    var foto = window.localStorage.getItem('photo')
+    imagerec(foto, pesokg, alturamt, meta);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/mobile.css">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+        /* CSS personalizado */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        #video {
+            width: 100%;
+            height: 100vh;
+            object-fit: cover; /* Garante que o vídeo preencha a área do elemento */
+        }
+        #canvas{
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="result">
+        <div class="topo2">
+            <div class="back" onclick="window.location.href = '.back.'"></div>
+            <span>Analize e informações</span>
+        </div>
+
+        <div class="scroll">
+             <div class="post"></div>
+        </div>
+       
+    </div>
+<script src="js/jquery-3.7.1.js"></script>
+<script src="js/tfjs.js"></script>
+<script src="js/posenet.js"></script>
+
+<script src="js/encrypt.js"></script>
+<script src="js/ia.js"></script>
+<script src="js/pose.js"></script>
+
+<script>
+
+var infof = window.localStorage.getItem('info_fitness');
+console.log(atob(infof));
+
+function filterPro(string) {
+    const linhas = string.trim().split('\n');
+    let resultado = '';
+
+    linhas.forEach(linha => {
+        const [propriedade, valor] = linha.split(': ');
+        resultado += `<div class="card-padd"><div class="card">`;
+        resultado += `<div class="propriedade">${propriedade}</div>`;
+        resultado += `<div class="valores">${valor}</div>`;
+        resultado += `</div></div>`;
+    });
+
+    return resultado;
+}
+function paragraf(texto) {
+    // Divide o texto em parágrafos onde houver pontos finais
+    let paragrafos = texto.split('. ');
+
+    // Adiciona as tags <p> para cada parágrafo
+    let novoTexto = paragrafos.map(paragrafo => `<p>${paragrafo}</p><br>`);
+
+    // Junta os parágrafos em uma única string e retorna
+    return novoTexto.join('');
+}
+
+var nota =`<div class="card-padd">
+<div class="card nota">
+     <div class="propriedade">Nota</div>
+     <div class="valores">${paragraf(`Nossa aplicação revolucionária utiliza tecnologia de análise de fotos e inteligência artificial para elaborar planos de sessões de exercícios, alimentação, nutrição, descanso, suplementação e vitaminas totalmente personalizados, adaptados de forma precisa ao corpo e às metas individuais de cada usuário. É essencial destacar que, embora nossa plataforma processe dados por meio de inteligência artificial e analise as informações a partir das fotos fornecidas, é possível que ocorram ocasionais lacunas de informação ou interpretações imprecisas. No entanto, garantimos um alto nível de precisão, alcançando cerca de 90%. Além disso, é importante observar que nosso modelo utiliza um algoritmo sensível à privacidade, portanto, não é compatível com fotos de crianças.`)}</div>
+</div>
+</div>`;
+var ff = filterPro(atob(infof));
+var foto = window.localStorage.getItem('photo')
+// <img src="${foto}" width="100%">
+$(".post").html(`<canvas id="canvas"></canvas>`+ff + nota);
+
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+
+detectPoseFromBase64Image(foto, canvas, ctx);
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,313 @@
+html{
+	 zoom: 1 !important;
+}
+*{
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: 'Open Sans', sans-serif;
+}
+.topo{
+	width: 100%;
+	height: 60px;
+	background: #0080ff;
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	padding-left: 10px;
+	padding-right: 20px;
+	z-index: 1000;
+}
+.topo2{
+	width: 100%;
+	height: 60px;
+	background: #0080ff;
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+	position: relative;
+	top: 0;
+	left: 0;
+	padding-left: 5px;
+	padding-right: 20px;
+	z-index: 1000;
+}
+.topo span{
+	font-size: 20px;
+	color: #fff;
+	line-height: 60px !important;
+	
+}
+.topo2 span{
+	font-size: 20px;
+	color: #fff;
+	line-height: 60px !important;
+	
+}
+.logo{
+	width: 60px;
+	height: 60px;
+	background-image: url(../icon/logo.png);
+	background-repeat: no-repeat;
+	background-size: 40px 40px;
+	background-position: center center;
+	float: left;
+}
+.back{
+	width: 60px;
+	height: 60px;
+	background-image: url(../icon/back.png);
+	background-repeat: no-repeat;
+	background-size: 30px 30px;
+	background-position: center center;
+	float: left;
+}
+.wap{
+	display: block;
+	background: red;
+	padding-top: 60px;
+
+}
+.photo{
+	width: 100%;
+	height: 700px;
+	position: fixed;
+	
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center center;
+	height: calc(100% - 136px);
+}
+.photo::after{
+	content: '';
+	position: fixed;
+	left: 0;
+	top: 58px;
+	width: calc(100% + 4px);
+	margin-left: -2px;
+	height: calc(100% - 136px);
+	background-image: url(../icon/mask.png);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center center;
+}
+.footer{
+	width: 100%;
+	height: 80px;
+	background: #000;
+	position: fixed;
+	bottom: 0;
+	z-index: 100;
+
+}
+.photo img{
+	margin: 0;
+	margin-bottom: -5px;
+	padding: 0;
+}
+.upload{
+	position: fixed;
+	width: 60px;
+	height: 60px;
+	bottom: 10px;
+	left: calc(50% - 30px);
+	background-color: #fff;
+	border-radius: 50px;
+	box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+	background-image: url(../icon/camera.png);
+	background-repeat: no-repeat;
+	background-size: 40px 40px;
+	background-position: center center;
+	overflow: hidden;
+	z-index: 10000;
+	opacity: 0.6;
+}
+.uploadload{
+	position: fixed;
+	width: 60px;
+	height: 60px;
+	bottom: 10px;
+	left: calc(50% - 30px);
+	background-color: #fff;
+	border-radius: 50px;
+	box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+	background-image: url(../icon/loading.gif);
+	background-repeat: no-repeat;
+	background-size: 190px 140px;
+	background-position: center center;
+	overflow: hidden;
+	z-index: 10000;
+}
+#canvas-video {
+	top: 60;
+	position: fixed;
+    width: 100%;
+    height: calc(100% - 140px) !important;
+    object-fit: cover; /* Garante que o vídeo preencha a área do elemento */
+    overflow: hidden;
+	
+}
+
+.camera-config{
+	position: fixed;
+	width: 50px;
+	height: 50px;
+	right: 10px;
+	top: 70px;
+	background-color: #fff;
+	border-radius: 50px;
+	box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+	background-image: url(../icon/girar.png);
+	background-repeat: no-repeat;
+	background-size: 35px 35px;
+	background-position: center center;
+	
+}
+.camera-time{
+	position: fixed;
+	width: 50px;
+	height: 50px;
+	right: 10px;
+	top: 130px;
+	background-color: #fff;
+	border-radius: 50px;
+	box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+	background-image: url(../icon/time.png);
+	background-repeat: no-repeat;
+	background-size: 40px 40px;
+	background-position: center center;
+
+}
+.result{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	background:#fff;
+	height: calc(100%);
+	z-index: 2000;
+}
+.scroll{
+	width: 100%;
+	height: calc(100% - 60px);
+	overflow-y: auto;
+	padding-top: 0px;
+	padding-bottom: 5px;
+}
+.propriedade{
+	display:block;
+	color: #0080ff;
+	font-size: 18px;
+	font-weight: bold;
+	margin-bottom: 5px;
+
+}
+.card-padd{
+	padding-bottom: 10px;
+
+}
+.card{
+	display: table;
+	width: 100%;
+	padding: 10px;
+	box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+	border-left: 5px solid #0080ff;
+
+}
+.nota{
+	box-shadow: rgba(255, 0, 0, 0.6) 0px 0px 0px 1px, rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+
+}
+.preview{
+	position: fixed;
+	top: 60px;
+	left: 0;
+	width: 100%;
+	background-color:#fff;
+	height: calc(100% - 60px);
+	z-index: 10;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center center;
+	display: none;
+}
+.card-input{
+	position: fixed;
+	left: 10px;
+	top: 70px;
+	width: 80px;
+
+}
+.box-input{
+	margin-bottom: 10px;
+
+}
+.box-input span{
+	display: block;
+	font-size: 18px;
+	margin-bottom: 5px;
+
+}
+.box-input input{
+	padding: 10px;
+	width: 100%;
+	border-radius: 5px;
+	border: none;
+	outline: none !important;
+}
+.box-input select{
+	padding: 10px;
+	width: 100%;
+	border-radius: 5px;
+	border: none;
+	outline: none !important;
+}
+.log{
+	position: fixed;
+	top: calc(50% - 80px);
+	left: 20px;
+	background:#fff;
+	display: block;
+	width: calc(100% - 40px);
+	z-index: 100000000000;
+	box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+	border-radius: 10px;
+	overflow: hidden;
+	display: none;
+}
+.title-log{
+	font-size: 20px;
+	color: #333;
+	display: block;
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+	padding: 10px;
+	text-align: center;
+}
+.legenda-log{
+	font-size: 17px;
+	color: red;
+	opacity: 0.7;
+	padding: 10px;
+	text-align: center;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+.card-button{
+	display: table;
+	width: 100%;
+
+}
+.btns{
+	width: calc(100% / 2);
+	padding: 10px;
+	font-size: 16px;
+	color: #0080ff;
+	float: left;
+	text-align: center;
+	box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+	line-height: 20px !important;
+	position: relative;
+	z-index: 100000;
+}
+.btns:hover{
+	background: #fafafa
+}

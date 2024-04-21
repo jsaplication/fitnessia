@@ -1,0 +1,40 @@
+body{
+	display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;  /* Define a altura do container flexbox */
+
+}
+.container{
+	width: calc(90%) !important;
+	background: #fafafa;
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+	border-radius: 10px;
+	overflow: hidden;
+
+}
+.w-48{
+	width: 600px !important;
+}
+#load-numeros{
+	background:#87BAEA;
+	border-radius: 10px;
+	font-weight: bold;
+}
+.text-gray-1000{
+	font-size: 30px !important;
+}
+.truncate{
+	background:#5CF7CA !important;
+	border-radius: 10px;
+	font-weight: bold;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+button svg{
+	float: left !important;
+	margin-right: 5px;
+}
+button span{
+	line-height: 25px !important;
+}
