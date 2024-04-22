@@ -70,7 +70,7 @@
 
     </div>
         <div class="camera-config" id="switch-camera-btn"></div>
-        <div class="camera-time" id="switch-time-btn"></div>
+        <div class="camera-time" id="switch-time-btn" onclick="cronometro(this)"></div>
         <div class="upload" id="capture-btn" onclick="capturePhoto(this)"></div>
     </div>
     <div class="preview"></div>
@@ -92,7 +92,9 @@
 let currentCamera = ''; // Padrão para câmera traseira
 var camera = window.localStorage.getItem('camera');
 
-
+function cronometro(e){
+    $(e).toggleClass('cron_active');
+}
 
 if(camera == null || camera == undefined || camera == ''){
     console.log('sem camera: camera traseira')
@@ -168,18 +170,72 @@ function capturePhoto(e){
     console.log(base64Data); // Aqui você pode enviar a base64 para onde precisar
     window.localStorage.setItem('photo', base64Data)
     // $(".preview").show();
-    $(".preview").attr('style', "background-image: url("+base64Data+"); display:block;")
-
-    var pesokg = $("#pesokg").val();
-    var alturamt = $("#alturamt").val();
-    var meta = $("#meta option:selected").val();
+    
 
 
-    imagerec(base64Data, pesokg, alturamt, meta);
+    //--------------------------
+
+        var minhaDiv = document.getElementById("switch-time-btn");
+
+        // Verifica se a div possui a classe desejada
+        if (minhaDiv.classList.contains("cron_active")) {
+            // Faça algo se a classe estiver presente
+            console.log("A classe 'suaClasse' está presente na div.");
+
+            function contagemRegressiva() {
+              let contador = 5;
+
+              // Função para exibir o contador atual e diminuir o contador
+              function exibirContador() {
+                console.log(contador);
+                $("#capture-btn").html(contador);
+                // Verifica se o contador chegou a 0, se sim, para a contagem regressiva
+                if (contador === 0) {
+                  clearInterval(intervalID);
+                  console.log("Contagem regressiva concluída!");
+                   $("#capture-btn").text('');
+                   $(".preview").attr('style', "background-image: url("+base64Data+"); display:block;")
+                   var pesokg = $("#pesokg").val();
+                   var alturamt = $("#alturamt").val();
+                   var meta = $("#meta option:selected").val();
+                   imagerec(base64Data, pesokg, alturamt, meta);
+
+                }
+                contador--;
+              }
+
+              // Chama a função exibirContador a cada segundo
+              const intervalID = setInterval(exibirContador, 1000);
+            }
+
+            // Chama a função contagemRegressiva para iniciar a contagem regressiva
+            contagemRegressiva();
+        } else {
+            // Faça algo se a classe não estiver presente
+            console.log("A classe 'suaClasse' não está presente na div.");
+            $(e).attr('onclick', 'capturePhoto(this)');
+            $(".preview").attr('style', "background-image: url("+base64Data+"); display:block;")
+            var pesokg = $("#pesokg").val();
+            var alturamt = $("#alturamt").val();
+            var meta = $("#meta option:selected").val();
+            imagerec(base64Data, pesokg, alturamt, meta);
+        }
+
+
+    //-------------------------
+    //$(".preview").attr('style', "background-image: url("+base64Data+"); display:block;")
+    // var pesokg = $("#pesokg").val();
+    // var alturamt = $("#alturamt").val();
+    // var meta = $("#meta option:selected").val();
+
+
+    // imagerec(base64Data, pesokg, alturamt, meta);
 
 
 
 }
+
+
 
 // Switch camera when the switch camera button is clicked
 document.getElementById('switch-camera-btn').addEventListener('click', function() {
@@ -202,27 +258,7 @@ function atualizar(){
 }
 
 
-function contagemRegressiva() {
-  let contador = 5;
 
-  // Função para exibir o contador atual e diminuir o contador
-  function exibirContador() {
-    console.log(contador);
-
-    // Verifica se o contador chegou a 0, se sim, para a contagem regressiva
-    if (contador === 0) {
-      clearInterval(intervalID);
-      console.log("Contagem regressiva concluída!");
-    }
-    contador--;
-  }
-
-  // Chama a função exibirContador a cada segundo
-  const intervalID = setInterval(exibirContador, 1000);
-}
-
-// Chama a função contagemRegressiva para iniciar a contagem regressiva
-contagemRegressiva();
 
 function closemodal(){
     console.log('close click')

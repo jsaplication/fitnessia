@@ -85,7 +85,7 @@ html{
 	width: calc(100% + 4px);
 	margin-left: -2px;
 	height: calc(100% - 136px);
-	background-image: url(../icon/mask.png);
+	background-image: url(../icon/grid.webp);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center center;
@@ -120,6 +120,10 @@ html{
 	overflow: hidden;
 	z-index: 10000;
 	opacity: 0.6;
+	text-align: center;
+	font-size: 28px;
+	line-height: 60px;
+	color: #0080ff;
 }
 .uploadload{
 	position: fixed;
@@ -160,7 +164,7 @@ html{
 	background-repeat: no-repeat;
 	background-size: 35px 35px;
 	background-position: center center;
-	
+
 }
 .camera-time{
 	position: fixed;
@@ -176,6 +180,9 @@ html{
 	background-size: 40px 40px;
 	background-position: center center;
 
+}
+.cron_active{
+	background-color: #0080ff !important;
 }
 .result{
 	position: fixed;
