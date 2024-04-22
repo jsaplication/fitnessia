@@ -85,7 +85,7 @@ html{
 	width: calc(100% + 4px);
 	margin-left: -2px;
 	height: calc(100% - 136px);
-	background-image: url(../icon/grid.webp);
+	background-image: url(../icon/grid.png);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center center;
