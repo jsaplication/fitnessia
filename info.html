@@ -55,20 +55,115 @@
 var infof = window.localStorage.getItem('info_fitness');
 console.log(atob(infof));
 
+// function filterPro(string) {
+//     const linhas = string.trim().split('\n');
+//     let resultado = '';
+
+//     linhas.forEach(linha => {
+//         const [propriedade, valor] = linha.split(': ');
+//         resultado += `<div class="card-padd"><div class="card">`;
+//         resultado += `<div class="propriedade">${propriedade}</div>`;
+//         resultado += `<div class="valores">${valor}</div>`;
+//         resultado += `</div></div>`;
+//     });
+
+//     return resultado;
+// }
+
 function filterPro(string) {
     const linhas = string.trim().split('\n');
     let resultado = '';
 
     linhas.forEach(linha => {
-        const [propriedade, valor] = linha.split(': ');
-        resultado += `<div class="card-padd"><div class="card">`;
-        resultado += `<div class="propriedade">${propriedade}</div>`;
-        resultado += `<div class="valores">${valor}</div>`;
-        resultado += `</div></div>`;
+        const partes = linha.split(': ');
+        if (partes.length === 2) {
+            const [propriedade, valor] = partes;
+            // Verifica se o valor não é nulo ou vazio antes de adicionar ao resultado
+
+            var prop1 = propriedade.toLowerCase();
+            // var newclass = prop1.split(' ').join('');
+            var dadosUser
+
+            if(prop1.includes("sexo") || prop1.includes("altura") || prop1.includes("imc") || prop1.includes("peso")){
+                console.log("Dados do Usuario", prop1);
+
+                var coloSexo, coloTitle, coloLegenda;
+                coloTitle = '#fff !important;';
+                coloLegenda = '#fff !important;';
+
+                if(prop1.includes("sexo")){
+                    coloSexo = 'background: rgb(0,128,255); background: linear-gradient(42deg, rgba(0,128,255,1) 0%, rgba(255,0,249,1) 100%);';
+
+                    if (valor.trim() !== '') {
+                        // resultado += `<div class="title-info">Dados do Usuario</div>`;
+                        resultado += `<div class="card-padd card-padd-info" style="width: calc(100% / 4); float: left; padding-right: 5px !important;">
+                                <div class="card card-info" style="background: ${coloSexo}">`;
+                        resultado += `<div class="propriedade" style="color: ${coloTitle}">${propriedade.toUpperCase()}</div>`;
+                        resultado += `<div class="valores" style="color: ${coloLegenda}">${valor}</div>`;
+                        resultado += `</div></div>`;
+                    }
+
+                }
+                if(prop1.includes("altura")){
+                    coloSexo = 'background: rgb(0,249,255); background: linear-gradient(42deg, rgba(0,138,255,1) 0%, rgba(0,203,64,1) 100%);';
+
+                    if (valor.trim() !== '') {
+                        // resultado += `<div class="title-info">Dados do Usuario</div>`;
+                        resultado += `<div class="card-padd card-padd-info" style="width: calc(100% / 4); float: left; padding-right: 6px !important;">
+                                <div class="card card-info" style="background: ${coloSexo}">`;
+                        resultado += `<div class="propriedade" style="color: ${coloTitle}">${propriedade.toUpperCase()}</div>`;
+                        resultado += `<div class="valores" style="color: ${coloLegenda}">${valor}</div>`;
+                        resultado += `</div></div>`;
+                    }
+                }
+                if(prop1.includes("imc")){
+                    coloSexo = 'background: rgb(255,136,0); background: linear-gradient(42deg, rgba(255,136,0,1) 0%, rgba(203,34,0,1) 100%);';
+                    if (valor.trim() !== '') {
+                        // resultado += `<div class="title-info">Dados do Usuario</div>`;
+                        resultado += `<div class="card-padd card-padd-info" style="width: calc(100% / 4); float: left; padding-left: 10px !important;">
+                                <div class="card card-info" style="background: ${coloSexo}">`;
+                        resultado += `<div class="propriedade" style="color: ${coloTitle}">${propriedade.toUpperCase()}</div>`;
+                        resultado += `<div class="valores" style="color: ${coloLegenda}">${valor}</div>`;
+                        resultado += `</div></div>`;
+                    }
+                }
+                if(prop1.includes("peso")){
+                    coloSexo = 'background: rgb(214,0,255); background: linear-gradient(42deg, rgba(214,0,255,1) 0%, rgba(203,0,0,1) 100%);';
+
+                    if (valor.trim() !== '') {
+                    // resultado += `<div class="title-info">Dados do Usuario</div>`;
+                        resultado += `<div class="card-padd card-padd-info" style="width: calc(100% / 4); float: left; padding-left: 5px !important;">
+                                <div class="card card-info" style="background: ${coloSexo}">`;
+                        resultado += `<div class="propriedade" style="color: ${coloTitle}">${propriedade.toUpperCase()}</div>`;
+                        resultado += `<div class="valores" style="color: ${coloLegenda}">${valor}</div>`;
+                        resultado += `</div></div>`;
+                    }
+                }
+
+                
+
+            }else{
+                console.log('Erro ao encotrar dados do suario')
+                 if (valor.trim() !== '') {
+                    resultado += `<div class="card-padd"><div class="card">`;
+                    resultado += `<div class="propriedade" >${propriedade}</div>`;
+                    resultado += `<div class="valores">${valor}</div>`;
+                    resultado += `</div></div>`;
+                 }
+            }
+
+
+           
+
+            
+
+        }
     });
 
     return resultado;
 }
+
+
 function paragraf(texto) {
     // Divide o texto em parágrafos onde houver pontos finais
     let paragrafos = texto.split('. ');
@@ -81,15 +176,23 @@ function paragraf(texto) {
 }
 
 var nota =`<div class="card-padd">
-<div class="card nota">
-     <div class="propriedade">Nota</div>
-     <div class="valores">${paragraf(`Nossa aplicação revolucionária utiliza tecnologia de análise de fotos e inteligência artificial para elaborar planos de sessões de exercícios, alimentação, nutrição, descanso, suplementação e vitaminas totalmente personalizados, adaptados de forma precisa ao corpo e às metas individuais de cada usuário. É essencial destacar que, embora nossa plataforma processe dados por meio de inteligência artificial e analise as informações a partir das fotos fornecidas, é possível que ocorram ocasionais lacunas de informação ou interpretações imprecisas. No entanto, garantimos um alto nível de precisão, alcançando cerca de 90%. Além disso, é importante observar que nosso modelo utiliza um algoritmo sensível à privacidade, portanto, não é compatível com fotos de crianças.`)}</div>
+    <div class="card nota">
+        <div class="propriedade">Nota</div>
+        <div class="valores">${paragraf(`Nossa aplicação revolucionária utiliza tecnologia de análise de fotos e inteligência artificial para elaborar planos de sessões de exercícios, alimentação, nutrição, descanso, suplementação e vitaminas totalmente personalizados, adaptados de forma precisa ao corpo e às metas individuais de cada usuário. É essencial destacar que, embora nossa plataforma processe dados por meio de inteligência artificial e analise as informações a partir das fotos fornecidas, é possível que ocorram ocasionais lacunas de informação ou interpretações imprecisas. No entanto, garantimos um alto nível de precisão, alcançando cerca de 90%. Além disso, é importante observar que nosso modelo utiliza um algoritmo sensível à privacidade, portanto, não é compatível com fotos de crianças.
+
+Não coletamos nem salvamos dados pessoais dos usuários. As fotos enviadas não são salvas nem compartilhadas. Respeitamos e valorizamos a privacidade de nossos usuários.`)}</div>
+    </div>
+
+    <div class="card nota">
+        <div class="propriedade">Sobre Nós</div>
+        <div class="valores">Desenvolvido por JSaplication.<br>Para entrar em contato, utilize o seguinte endereço: Roteiro, AL.<br>WhatsApp: 5582981873291.<br>Instagram: @jsaplication.</div>
+    </div>
 </div>
-</div>`;
+`;
 var ff = filterPro(atob(infof));
 var foto = window.localStorage.getItem('photo')
 // <img src="${foto}" width="100%">
-$(".post").html(`<canvas id="canvas"></canvas>`+ff + nota);
+$(".post").html(`<div class="padd-canvas-info"><canvas id="canvas"></canvas></div>`+ff + nota);
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');

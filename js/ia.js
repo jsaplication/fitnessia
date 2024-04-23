@@ -1,4 +1,4 @@
-function imagerec(imageb4, peso, altura, meta){
+function imagerec(imageb4, peso, altura, objetivo, regiao){
 
 	$("#capture-btn").removeClass('upload');
 	$("#capture-btn").addClass('uploadload');
@@ -7,29 +7,79 @@ function imagerec(imageb4, peso, altura, meta){
 	var model_image = decrypt("gemini-pro", "0f1119191d53025f150a09001f081a005b151e0e09021808090c03171d00000908081e005e5e11000a4a1b580c0c59115d02080108051d464a151f06090c40191c0600061b1c0e0a0353090c4315000e13002e06001d481e06500c001454") + key;
 	var img = imageb4.split(',')[1];
 
-        
+        //Meta:
+            // Sexo:
+            // Altura:
+            // IMC:
+            // Peso:
+            // Sessões dos treinos:
+            // Alimentação:
+            // Vitaminas:
+            // Suplementos:
+            // Intervalos:
+            // Calorias Recomendadas:
+            // Nutrição Recomendadaa:
+            // Equipamentos Recomendados:
+            // Dieta Recomendadas:
+            // Dica extra:
+            // Dicas de fitness:
         const prompt = `
             importante: Analise a imagem e retorne as seguintes propriedades no meu padão: 
-            Meta:
-            Sexo:
-            Altura:
-            IMC:
-            Peso:
-            Sessões dos treinos:
-            Alimentação:
-            Alimentos pesados:
-            Vitaminas:
-            Suplementos:
-            Intervalos:
-            Dicas de fitness:
-            Informações sobre nutrição:
-            Calorias Recomendadas:
-            Tipos de suplementos:
-            Equipamentos utilizados:
-            Dica extra:
+            
+            Sexo: Masculino / Feminino
+            Altura: (em centímetros)
+            IMC: (calcule aqui: https://www.endocrino.org.br/obesidade/)
+            Peso: (em kg)
+            Objetivo: Perder peso / Ganhar peso / Ganhar músculo / Perder músculo,
+            Região: ${regiao}
+            Treino:
 
-            Dados Reais do Usuario peso(${peso}), altura(${altura}), meta(${meta}). Caso alguns desses dados do usuário estejam vazios, estime um valor através da análise da imagem.
-            Se a imagem não for de uma corpo humano(a) por completo, retorne um erro.
+            Sessões: (dias por semana e frequência)
+            Tipo de treino: (musculação, cardio, HIIT, etc.)
+            Nível: (iniciante, intermediário, avançado)
+            Exercícios: (lista detalhada com séries, repetições e carga)
+            Progressão: (como você pretende aumentar a intensidade ao longo do tempo)
+            Descanso: (tempo entre os treinos e séries)
+            Alimentação:
+
+            Calorias: (recomendação diária)
+            Macronutrientes: (proteína, carboidrato e gordura - porcentagem ou gramas)
+            Micronutrientes: (vitaminas e minerais importantes)
+            Alimentos: (exemplos de refeições e lanches)
+            Restrições alimentares: (alergias, intolerâncias, preferências)
+            Hidratação: (quantidade de água recomendada por dia)
+            Suplementos:
+
+            Proteína: (tipo, dosagem e momento de uso)
+            Creatina: (tipo, dosagem e momento de uso)
+            Outros: (pré-treino, pós-treino, multivitamínico, etc.)
+            Equipamentos:
+
+            Acessórios: (halteres, caneleiras, cinto, etc.)
+            Máquinas: (academia ou em casa)
+            Dicas Extras:
+
+            Sono: (qualidade e quantidade)
+            Estresse: (controle do estresse e técnicas de relaxamento)
+            Motivação: (dicas para manter a motivação e disciplina)
+            Progresso: (monitoramento do progresso e ajustes no plano)
+            Comunidade: (grupos de apoio online ou presenciais)
+            Profissional: (consulta com um profissional de educação física ou nutricionista)
+            Dicas de Fitness:
+
+            Aquecimento: (importante antes de cada treino)
+            Alongamento: (importante após cada treino)
+            Postura: (manter postura correta durante os exercícios)
+            Técnica: (executar os exercícios com técnica correta para evitar lesões)
+            Variedade: (variar os treinos para evitar monotonia e estimular o corpo)
+            Paciência: (resultados levam tempo e dedicação)
+            Consistência: (treinar e se alimentar de forma consistente)
+            Diversão: (tornar os treinos divertidos para manter a motivação)
+
+
+
+            Dados Reais do Usuario peso(${peso}), altura(${altura}), objetivo(${objetivo}), região(${regiao}). Caso alguns desses dados do usuário estejam vazios, estime um valor através da análise da imagem.
+            Se a imagem não for de uma corpo humano(a) por completo, retorne um erro. todos item da lista tem que ser de extrema importancia.
             `;
 
         var data = {

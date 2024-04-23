@@ -48,7 +48,7 @@
         </div>
 
         <div class="box-input">
-            <span>Meta</span>
+            <span>Objetivo</span>
             <select id="meta">
                 <option >Ganhar Peso</option>
                 <option >Perder Peso</option>
@@ -64,6 +64,36 @@
                 <option >Reduzir Estresse</option>
                 <option >Aumentar Energia</option>
                 <option >Melhorar Qualidade do Sono</option>
+            </select>
+           
+        </div>
+
+
+         <div class="box-input">
+            <span>Região</span>
+            <select id="regiao">
+                  <option>Corpo</option>
+                  <option>Pernas</option>
+                  <option>Braços</option>
+                  <option>Bunda</option>
+                  <option>Ombros</option>
+                  <option>Abdômen</option>
+                  <option>Peito</option>
+                  <option>Costas</option>
+                  <option>Panturrilhas</option>
+                  <option>Antebraços</option>
+                  <option>Quadril</option>
+                  <option>Glúteos</option>
+                  <option>Bíceps</option>
+                  <option>Tríceps</option>
+                  <option>Ombro Anterior</option>
+                  <option>Ombro Posterior</option>
+                  <option>Trapézios</option>
+                  <option>Abdominal Obliquo</option>
+                  <option>Abdominal Transverso</option>
+                  <option>Abdominal Reto</option>
+                  <option>Isquiotibiais</option>
+                  <option>Quadríceps</option>
             </select>
            
         </div>
@@ -198,7 +228,8 @@ function capturePhoto(e){
                    var pesokg = $("#pesokg").val();
                    var alturamt = $("#alturamt").val();
                    var meta = $("#meta option:selected").val();
-                   imagerec(base64Data, pesokg, alturamt, meta);
+                   var regiao = $("#regiao option:selected").val();
+                   imagerec(base64Data, pesokg, alturamt, meta, regiao);
 
                 }
                 contador--;
@@ -218,7 +249,8 @@ function capturePhoto(e){
             var pesokg = $("#pesokg").val();
             var alturamt = $("#alturamt").val();
             var meta = $("#meta option:selected").val();
-            imagerec(base64Data, pesokg, alturamt, meta);
+            var regiao = $("#regiao option:selected").val();
+            imagerec(base64Data, pesokg, alturamt, meta, regiao);
         }
 
 
@@ -274,9 +306,10 @@ function tentarnovamente(){
     var pesokg = $("#pesokg").val();
     var alturamt = $("#alturamt").val();
     var meta = $("#meta option:selected").val();
+    var regiao = $("#regiao option:selected").val();
     $(".log").hide()
     var foto = window.localStorage.getItem('photo')
-    imagerec(foto, pesokg, alturamt, meta);
+    imagerec(foto, pesokg, alturamt, meta, regiao);
 }
 </script>
 </body>
