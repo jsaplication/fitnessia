@@ -186,19 +186,6 @@ function setupCamera(cameraId) {
             }
             drawFrame();
 
-
-             // Obtém as configurações de controle do track
-         
-              
-              // Verifica se o flash está disponível
-            if (settings.torch) {
-            // Liga o flash
-             track.applyConstraints({ advanced: [{ torch: true }] });
-            } else {
-            console.error('Flash indisponível');
-            }
-
-
         })
         .catch(function(err) {
             console.log("Erro ao acessar a câmera: " + err);
@@ -324,8 +311,6 @@ function tentarnovamente(){
     var foto = window.localStorage.getItem('photo')
     imagerec(foto, pesokg, alturamt, meta, regiao);
 }
-
-
 </script>
 </body>
 </html>

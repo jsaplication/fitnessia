@@ -20,16 +20,17 @@ html{
 	z-index: 1000;
 }
 .topo2{
-	width: 100%;
+	width: calc(100% - 20px);
 	height: 60px;
 	background: #0080ff;
 	box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 	position: relative;
-	top: 0;
-	left: 0;
+	top: 10px;
+	left: 10px;
 	padding-left: 0px;
 	padding-right: 20px;
 	z-index: 1000;
+	border-radius: 30px;
 }
 .topo span{
 	font-size: 20px;
@@ -195,10 +196,10 @@ html{
 }
 .scroll{
 	width: 100%;
-	height: calc(100% - 60px);
+	height: calc(100% - 80px);
 	overflow-y: auto;
 	padding-top: 0px;
-	padding-bottom: 5px;
+	padding-bottom: 5px;margin-top: 20px;
 }
 .propriedade{
 	display:block;
@@ -209,7 +210,7 @@ html{
 
 }
 .card-padd{
-	padding-bottom: 10px;
+	padding: 10px;
 	 
 
 
@@ -233,7 +234,7 @@ html{
 	padding: 10px;
 	box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 /*	border-left: 5px solid #0080ff;*/
-
+	border-radius: 20px;
 
 }
 .nota{
@@ -341,10 +342,10 @@ html{
 	background: #fafafa
 }
 .padd-canvas-info{
-/*	padding: 10px;*/
-	
+	padding: 10px;
+	padding-top: 0px;
 /*	border-radius: 0px 0px 30px 30px;*/
 }
 .padd-canvas-info canvas{
-	border-radius: 0px 0px 30px 30px;
+	border-radius:  30px;
 }
